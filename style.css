@@ -1096,3 +1096,47 @@ button:hover{
         font-size: 1.5rem;
     }
 }
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    padding: 15px 20px;
+  }
+  
+  .logo {
+    margin-bottom: 10px;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  nav a {
+    margin-left: 0;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: 0.3s;
+    white-space: nowrap;
+  }
+  
+  nav a:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+  
+  .hero {
+    height: auto;
+    min-height: 70vh;
+    padding: 30px 20px;
+  }
+  
+  .hero h2, 
+  .hero p {
+    padding: 0 10px;
+  }
+}
