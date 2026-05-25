@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insectos</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="loginScreen" class="login-container">
+    <div class="login-card">
+        <h1 class="login-title">Bienvenido</h1>
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Correo electrónico" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Contraseña" required>
+            </div>
+            <div class="remember-group">
+                <label>
+                    <input type="checkbox" id="rememberMe"> Recordarme
+                </label>
+            </div>
+            <button type="submit" class="login-btn">INICIAR SESIÓN</button>
+        </form>
+    </div>
+</div>
+
+<div id="mainContent" style="display: none;">
+    
+    <header>
+        <div class="logo">
+            <img src="logo.png.jpeg" alt="Logo">
+            <h1>Mi Página Web</h1>
+        </div>
+        <nav>
+            <a href="#" id="navInicio">Inicio</a>
+            <a href="#" id="navInfo">Información</a>
+            <a href="#" id="navContacto">Contacto</a>
+            <a href="#" id="logoutBtn" style="color: #f8f7f7;">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    
+    
+        <section id="heroSection" class="hero">
+            <h1>ENTOMOLOGIA</h1>
+            <p>CONOCIENDO EL MUNDO DE LOS INSECTOS</p>
+            <button id="comencemosBtn">Comencemos</button>
+        </section>
+
+    
+        <div id="infoSection" style="display: none;">
+            <section id="apartado2">
+                <br>
+                <br>
+                <h2 style="text-align: center;"> LOS INSECTOS MAS RAROS DEL MUNDO
+                </h2>
+            </section>
+
+            <section class="contenedor">
+                <div class="card">
+                    <h2>Insecto Palo Gigante</h2>
+                    <p>
+                        El insecto palo gigante de Chan es considerado
+                        el insecto más largo del mundo, alcanzando
+                        hasta 56 cm con las patas extendidas.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2>Saltamontes Globo</h2>
+                    <p>
+                        Este extraño insecto posee estructuras redondas
+                        sobre su cuerpo que ayudan a espantar depredadores.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2>Mariposa de Cristal</h2>
+                    <p>
+                        Sus alas transparentes permiten que se camuflee
+                        fácilmente en la naturaleza.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2>Hormiga Panda</h2>
+                    <p>
+                        Aunque parece una hormiga, realmente es una avispa
+                        con colores blanco y negro muy llamativos.
+                    </p>
+                </div>
+            </section>
+
+            <section class="contenedor">
+                <div class="card">
+                    <h2>Mosca de las hadas</h2>
+                    <p>
+                        Una de las criaturas mas pequeñas 
+                        del reino animal, sus alas parecen
+                        plumas delicadas bajo un microscopio
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2>Weta Gigante</h2>
+                    <p>
+                        Uno de los animales mas pesados, originario de 
+                        Nueva Zelanda
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2>Escarabajo Hércules</h2>
+                    <p>
+                        Capaz de cargar hasta 850 veces su propio peso, se origina en selvas
+                        del centro y sur de America
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2>Mosca del cangrejo</h2>
+                    <p>
+                        Su larva entra al cuerpo de la araña viva
+                        y la consume desde dentro
+                    </p>
+                </div>
+            </section>
+
+<section class="interactive-carousel-section">
+    <div class="carousel-header">
+        <h2> GALERÍA INTERACTIVA</h2>
+        <p>Haz clic en cualquier imagen para conocer más</p>
+    </div>
+
+    <div class="carousel-container">
+        <button class="carousel-btn prev-carousel" id="carouselPrevBtn">❮</button>
+        
+        <div class="carousel-track-container">
+            <div class="carousel-track" id="carouselTrack">
+                
+                <div class="carousel-card" data-insect='{
+                    "nombre": "Mariposa Monarca",
+                    "habitat": "Bosques de México, EE.UU. y Canadá",
+                    "datoCurioso": "Viaja hasta 4,000 km durante su migración",
+                    "cientifico": "Danaus plexippus"
+                }'>
+                    <img src="mariposa.jfif" alt="Mariposa Monarca" onerror="this.src='https://images.unsplash.com/photo-1558256731-954de519cac7?w=300'">
+                    <div class="carousel-overlay">
+                        <span class="overlay-icon">🔍</span>
+                        <p>Haz clic para más info</p>
+                    </div>
+                </div>
+
+                <div class="carousel-card" data-insect='{
+                    "nombre": "Escarabajo Hércules",
+                    "habitat": "Selvas tropicales de Centro y Sudamérica",
+                    "datoCurioso": "Puede cargar 850 veces su propio peso",
+                    "cientifico": "Dynastes hercules"
+                }'>
+                    <img src="hercules.jfif" alt="Escarabajo Hércules" onerror="this.src='https://images.unsplash.com/photo-1557254318-d0b76874d5dd?w=300'">
+                    <div class="carousel-overlay">
+                        <span class="overlay-icon">🔍</span>
+                        <p>Haz clic para más info</p>
+                    </div>
+                </div>
+
+                <div class="carousel-card" data-insect='{
+                    "nombre": "Mantis Religiosa",
+                    "habitat": "Zonas tropicales y templadas del mundo",
+                    "datoCurioso": "La hembra devora al macho después del apareamiento",
+                    "cientifico": "Mantis religiosa"
+                }'>
+                    <img src="mantis.jfif" alt="Mantis Religiosa" onerror="this.src='https://images.unsplash.com/photo-1519752441410-5d2b6a31e5e3?w=300'">
+                    <div class="carousel-overlay">
+                        <span class="overlay-icon">🔍</span>
+                        <p>Haz clic para más info</p>
+                    </div>
+                </div>
+
+                <div class="carousel-card" data-insect='{
+                    "nombre": "Libélula",
+                    "habitat": "Cerca de lagos, estanques y ríos",
+                    "datoCurioso": "Es uno de los insectos más rápidos, alcanza 50 km/h",
+                    "cientifico": "Anisoptera"
+                }'>
+                    <img src="libelulaa.jfif" alt="Libélula" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190f7?w=300'">
+                    <div class="carousel-overlay">
+                        <span class="overlay-icon">🔍</span>
+                        <p>Haz clic para más info</p>
+                    </div>
+                </div>
+
+                <div class="carousel-card" data-insect='{
+                    "nombre": "Hormiga Bala",
+                    "habitat": "Selvas de Nicaragua a Paraguay",
+                    "datoCurioso": "Tiene la picadura más dolorosa del mundo (índice Schmidt nivel 4+)",
+                    "cientifico": "Paraponera clavata"
+                }'>
+                    <img src="Hormiga Bala.jfif" alt="Hormiga Bala" onerror="this.src='https://images.unsplash.com/photo-1557254318-d0b76874d5dd?w=300'">
+                    <div class="carousel-overlay">
+                        <span class="overlay-icon">🔍</span>
+                        <p>Haz clic para más info</p>
+                    </div>
+                </div>
+
+                <div class="carousel-card" data-insect='{
+                    "nombre": "Escarabajo Joya",
+                    "habitat": "Bosques tropicales de América Central",
+                    "datoCurioso": "Su caparazón iridiscente era usado como joyería viva",
+                    "cientifico": "Sternocera aequisignata"
+                }'>
+                    <img src="escarabajo-joya.jfif" alt="Escarabajo Joya" onerror="this.src='https://images.unsplash.com/photo-1517547953391-ce5ebeb2a466?w=300'">
+                    <div class="carousel-overlay">
+                        <span class="overlay-icon">🔍</span>
+                        <p>Haz clic para más info</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="carousel-btn next-carousel" id="carouselNextBtn">❯</button>
+    </div>
+
+    <div class="carousel-dots" id="carouselDots"></div>
+</section>
+
+
+<div id="insectModal" class="insect-modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-insect-icon">🦋</div>
+        <h2 id="modalNombre">Mariposa Monarca</h2>
+        <div class="modal-info">
+            <div class="info-row">
+                <span class="info-label"> Hábitat:</span>
+                <span id="modalHabitat">Bosques de México</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"> Nombre científico:</span>
+                <span id="modalCientifico">Danaus plexippus</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"> Dato curioso:</span>
+                <span id="modalDato">Viaja hasta 4,000 km</span>
+            </div>
+        </div>
+        <button class="modal-close-btn">Cerrar</button>
+    </div>
+</div>
+
+<section class="venomous-section">
+    <div class="venomous-header">
+        <h2> INSECTOS VENENOSOS </h2>
+        <p>Los más peligrosos y fascinantes del mundo</p>
+    </div>
+
+    <div class="venomous-grid">
+        
+        <div class="venom-card">
+            <div class="venom-card-inner">
+                <div class="venom-card-front">
+                    <div class="venom-icon">🐜</div>
+                    <h3>Hormiga Bala</h3>
+                    <div class="venom-badge"> EXTREMO</div>
+                </div>
+                <div class="venom-card-back">
+                    <h3>Hormiga Bala</h3>
+                    <p><strong>Veneno:</strong> Poneratoxina</p>
+                    <p><strong>Dolor:</strong> El más doloroso del mundo (Nivel 4+ en el índice Schmidt)</p>
+                    <p><strong>Efecto:</strong> Dolor intenso por 24 horas, parálisis temporal</p>
+                    <p><strong>Ubicación:</strong> Selvas de Nicaragua a Paraguay</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="venom-card">
+            <div class="venom-card-inner">
+                <div class="venom-card-front">
+                    <div class="venom-icon">🦂</div>
+                    <h3>Escorpión Amarillo</h3>
+                    <div class="venom-badge"> MORTAL</div>
+                </div>
+                <div class="venom-card-back">
+                    <h3>Escorpión Amarillo</h3>
+                    <p><strong>Veneno:</strong> Neurotoxina</p>
+                    <p><strong>Peligro:</strong> Responsable de la mayoría de muertes por escorpión</p>
+                    <p><strong>Efecto:</strong> Parálisis, dificultad respiratoria, convulsiones</p>
+                    <p><strong>Ubicación:</strong> Norte de África y Medio Oriente</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="venom-card">
+            <div class="venom-card-inner">
+                <div class="venom-card-front">
+                    <div class="venom-icon">🐝</div>
+                    <h3>Avispa Asiática</h3>
+                    <div class="venom-badge"> PELIGROSA</div>
+                </div>
+                <div class="venom-card-back">
+                    <h3>Avispa Asiática</h3>
+                    <p><strong>Veneno:</strong> Mandaratoxina</p>
+                    <p><strong>Peligro:</strong> Mata a 50+ personas al año en Japón</p>
+                    <p><strong>Efecto:</strong> Daño renal, reacciones alérgicas severas</p>
+                    <p><strong>Ubicación:</strong> Asia templada y tropical</p>
+                </div>
+            </div>
+        </div>
+
+    
+        <div class="venom-card">
+            <div class="venom-card-inner">
+                <div class="venom-card-front">
+                    <div class="venom-icon">🐛</div>
+                    <h3>Oruga Lonomia</h3>
+                    <div class="venom-badge"> MORTAL</div>
+                </div>
+                <div class="venom-card-back">
+                    <h3>Oruga Lonomia</h3>
+                    <p><strong>Veneno:</strong> Anticoagulante potente</p>
+                    <p><strong>Peligro:</strong> Puede causar hemorragia interna fatal</p>
+                    <p><strong>Efecto:</strong> Insuficiencia renal, hemorragias</p>
+                    <p><strong>Ubicación:</strong> Selvas de Sudamérica</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="venom-card">
+            <div class="venom-card-inner">
+                <div class="venom-card-front">
+                    <div class="venom-icon">🕷️</div>
+                    <h3>Araña de Saco</h3>
+                    <div class="venom-badge"> PELIGROSA</div>
+                </div>
+                <div class="venom-card-back">
+                    <h3>Araña de Saco</h3>
+                    <p><strong>Veneno:</strong> Citotoxina</p>
+                    <p><strong>Peligro:</strong> Muerde sin provocación</p>
+                    <p><strong>Efecto:</strong> Úlceras necróticas, fiebre, náuseas</p>
+                    <p><strong>Ubicación:</strong> América y Europa</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="venom-card">
+            <div class="venom-card-inner">
+                <div class="venom-card-front">
+                    <div class="venom-icon">🐞</div>
+                    <h3>Escarabajo Bombardero</h3>
+                    <div class="venom-badge"> QUÍMICO</div>
+                </div>
+                <div class="venom-card-back">
+                    <h3>Escarabajo Bombardero</h3>
+                    <p><strong>Mecanismo:</strong> Pulveriza químicos a 100°C</p>
+                    <p><strong>Peligro:</strong> Irritación severa en piel y ojos</p>
+                    <p><strong>Efecto:</strong> Quemaduras químicas</p>
+                    <p><strong>Ubicación:</strong> Cosmopolita</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+            <section class="featured-section">
+                <div class="section-header">
+                    <h2>Insectos Destacados</h2>
+                    <p>Los más impresionantes del mundo</p>
+                </div>
+                
+                <div class="featured-slider">
+                    <button class="slider-btn prev" id="prevSliderBtn">❮</button>
+                    
+                    <div class="slider-container">
+                        <div id="sliderWrapper">
+                            <div class="featured-card">
+                                <img src="descarga.jfif" alt="Mariposa Monarca" onerror="this.src='https://images.unsplash.com/photo-1558256731-954de519cac7?w=400'">
+                                <div class="featured-info">
+                                    <h3>Mariposa Monarca</h3>
+                                    <p>La reina de la migración</p>
+                                </div>
+                            </div>
+                            
+                            <div class="featured-card">
+                                <img src="escarabajo.jpg" alt="Escarabajo Hércules" onerror="this.src='https://images.unsplash.com/photo-1557254318-d0b76874d5dd?w=400'">
+                                <div class="featured-info">
+                                    <h3>Escarabajo Hércules</h3>
+                                    <p>El más fuerte del mundo</p>
+                                </div>
+                            </div>
+                            
+                            <div class="featured-card">
+                                <img src="chinche.jfif" alt="Chinche de hoja" onerror="this.src='https://images.unsplash.com/photo-1517547953391-ce5ebeb2a466?w=400'">
+                                <div class="featured-info">
+                                    <h3>Chinche de hoja</h3>
+                                    <p>Maestro del camuflaje</p>
+                                </div>
+                            </div>
+                            
+                            <div class="featured-card">
+                                <img src="polilla.jfif" alt="Oruga" onerror="this.src='https://images.unsplash.com/photo-1553194260-d4fdb0c4bdb5?w=400'">
+                                <div class="featured-info">
+                                    <h3>Polilla esfinge colibrí</h3>
+                                    <p>Precisión milimétrica</p>
+                                </div>
+                            </div>
+
+                            <div class="featured-card">
+                                <img src="gusano.jfif" alt="Oruga" onerror="this.src='https://images.unsplash.com/photo-1553194260-d4fdb0c4bdb5?w=400'">
+                                <div class="featured-info">
+                                    <h3>Larva de Polilla</h3>
+                                    <p>Futura mariposa</p>
+                                </div>
+                            </div>
+                            
+                            <div class="featured-card">
+                                <img src="libelula.jfif" alt="Libélula" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190f7?w=400'">
+                                <div class="featured-info">
+                                    <h3>Libélula</h3>
+                                    <p>Acróbata del aire</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="slider-btn next" id="nextSliderBtn">❯</button>
+                </div>
+                
+                <div class="slider-dots" id="sliderDots"></div>
+            </section>
+        </div>
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
