@@ -4,49 +4,35 @@ const nextBtn = document.getElementById('nextSliderBtn');
 const dotsContainer = document.getElementById('sliderDots');
 
 let currentIndex = 0;
-let totalCards = 0;
-let cardsPerView = 1;
 
 function getCardsPerView() {
-    if (window.innerWidth >= 768) {
-        return 3; 
-    } else {
-        return 1; 
-    }
+    return window.innerWidth >= 768 ? 3 : 1;
 }
 
 function updateSlider() {
     if (!sliderWrapper) return;
-    
-    cardsPerView = getCardsPerView();
-    totalCards = document.querySelectorAll('.featured-card').length;
-    
 
+    const cardsPerView = getCardsPerView();
+    const totalCards = document.querySelectorAll('.featured-card').length;
     const totalPages = Math.ceil(totalCards / cardsPerView);
     const maxIndex = totalPages - 1;
-    
+
     if (currentIndex > maxIndex) currentIndex = maxIndex;
     if (currentIndex < 0) currentIndex = 0;
-    
-    const cardWidth = document.querySelector('.featured-card')?.offsetWidth || 0;
-    const gap = 20; 
 
+    const cardWidth = document.querySelector('.featured-card')?.offsetWidth || 0;
+    const gap = 20;
     const translateX = -currentIndex * (cardWidth + gap) * cardsPerView;
-    
+
     sliderWrapper.style.transform = `translateX(${translateX}px)`;
-    
-    updateDots();
+    updateDots(totalPages, cardsPerView);
 }
 
-function updateDots() {
+function updateDots(totalPages, cardsPerView) {
     if (!dotsContainer) return;
-    
-    cardsPerView = getCardsPerView();
-    totalCards = document.querySelectorAll('.featured-card').length;
-    const totalDots = Math.ceil(totalCards / cardsPerView);
-    
+
     dotsContainer.innerHTML = '';
-    for (let i = 0; i < totalDots; i++) {
+    for (let i = 0; i < totalPages; i++) {
         const dot = document.createElement('div');
         dot.classList.add('dot');
         if (i === currentIndex) dot.classList.add('active');
@@ -59,12 +45,10 @@ function updateDots() {
 }
 
 function nextSlide() {
-    cardsPerView = getCardsPerView();
-    totalCards = document.querySelectorAll('.featured-card').length;
+    const cardsPerView = getCardsPerView();
+    const totalCards = document.querySelectorAll('.featured-card').length;
     const totalPages = Math.ceil(totalCards / cardsPerView);
-    const maxIndex = totalPages - 1;
-    
-    if (currentIndex < maxIndex) {
+    if (currentIndex < totalPages - 1) {
         currentIndex++;
         updateSlider();
     }
@@ -82,38 +66,34 @@ if (prevBtn && nextBtn) {
     nextBtn.addEventListener('click', nextSlide);
 }
 
-window.addEventListener('resize', () => {
-    updateSlider();
-});
-
-const observer = new ResizeObserver(() => {
-    updateSlider();
-});
+window.addEventListener('resize', updateSlider);
 
 const featuredCards = document.querySelectorAll('.featured-card');
-featuredCards.forEach(card => observer.observe(card));
+const resizeObserver = new ResizeObserver(updateSlider);
+featuredCards.forEach(card => resizeObserver.observe(card));
 
-setTimeout(() => {
-    updateSlider();
-}, 100);
+setTimeout(updateSlider, 100);
 
+// ============ LOGIN / LOGOUT ============
 window.addEventListener('DOMContentLoaded', () => {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     const rememberMe = localStorage.getItem('rememberMe');
-    
+
     if (isLoggedIn === 'true' && rememberMe === 'true') {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('mainContent').style.display = 'block';
+        setTimeout(updateSlider, 150);
+        setTimeout(updateCarousel, 150);
     }
 });
 
-document.getElementById('loginForm').addEventListener('submit', function(e) {
+document.getElementById('loginForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    
+
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const rememberMe = document.getElementById('rememberMe').checked;
-    
+
     if (email && password) {
         localStorage.setItem('isLoggedIn', 'true');
         if (rememberMe) {
@@ -123,150 +103,64 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
             localStorage.setItem('rememberMe', 'false');
             sessionStorage.setItem('isLoggedIn', 'true');
         }
-        
+
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('mainContent').style.display = 'block';
-        
-        console.log(`Bienvenido ${email}`);
+
+        setTimeout(updateSlider, 150);
+        setTimeout(updateCarousel, 150);
     } else {
         alert('Por favor completa todos los campos');
     }
 });
 
+const logoutBtn = document.getElementById('logoutBtn');
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('rememberMe');
+        sessionStorage.removeItem('isLoggedIn');
+        location.reload();
+    });
+}
 
-
+// ============ NAVEGACIÓN ============
 const navInicio = document.getElementById('navInicio');
 const navInfo = document.getElementById('navInfo');
 const comencemosBtn = document.getElementById('comencemosBtn');
-const heroSection = document.getElementById('heroSection');
+const heroSection = document.querySelector('.hero');
 const infoSection = document.getElementById('infoSection');
 
-
 function mostrarInicio() {
-    if (heroSection) heroSection.style.display = 'flex'; 
+    if (heroSection) heroSection.style.display = 'flex';
     if (infoSection) infoSection.style.display = 'none';
-    
-    
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
 
 function mostrarInformacion() {
     if (heroSection) heroSection.style.display = 'none';
     if (infoSection) infoSection.style.display = 'block';
-    
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    
     setTimeout(() => {
         currentIndex = 0;
         updateSlider();
+        carouselIndex = 0;
+        updateCarousel();
     }, 100);
 }
 
-if (comencemosBtn) {
-    comencemosBtn.addEventListener('click', mostrarInformacion);
-}
+if (comencemosBtn) comencemosBtn.addEventListener('click', mostrarInformacion);
 
-// Eventos de navegación
-if (navInicio) {
-    navInicio.addEventListener('click', function(e) {
-        e.preventDefault();
-        mostrarInicio();
-    });
-}
-
-if (navInfo) {
-    navInfo.addEventListener('click', function(e) {
-        e.preventDefault();
-        mostrarInformacion();
-    });
-}
-
-const logoutBtn = document.getElementById('logoutBtn');
-if (logoutBtn) {
-    logoutBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        logout();
-    });
-}
-
-
-function logout() {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('rememberMe');
-    sessionStorage.removeItem('isLoggedIn');
-    location.reload();
-}
-
-
-const loginForm = document.getElementById('loginForm');
-if (loginForm) {
-    loginForm.addEventListener('submit', function(e) {
-        setTimeout(() => {
-            mostrarInicio();
-        }, 100);
-    });
-}
-
-
-
-const venomCards = document.querySelectorAll('.venom-card');
-if (venomCards.length > 0) {
-    venomCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            // Pequeña vibración al pasar el mouse
-            card.style.transform = 'scale(1.02)';
-            card.style.transition = 'transform 0.3s ease';
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'scale(1)';
-        });
-    });
-}
-
-const mortalBadges = document.querySelectorAll('.venom-badge');
-if (mortalBadges.length > 0) {
-    mortalBadges.forEach(badge => {
-        if (badge.textContent.includes('MORTAL')) {
-            const card = badge.closest('.venom-card');
-            if (card) {
-                card.addEventListener('click', () => {
-                    const insectName = card.querySelector('.venom-card-front h3')?.textContent || 'Este insecto';
-                    console.log(`⚠️ ADVERTENCIA: ${insectName} es extremadamente peligroso ⚠️`);
-                });
-            }
-        }
-    });
-}
-
-function mostrarEstadisticasVeneno() {
-    const stats = {
-        'Más peligroso': 'Hormiga Bala (dolor nivel 4+)',
-        'Más mortal': 'Escorpión Amarillo',
-        'Muerte por año': 'Más de 5,000 por escorpiones',
-        'Tratamiento': 'Antiveneno específico para cada especie'
-    };
-    
-    console.log('📊 ESTADÍSTICAS DE INSECTOS VENENOSOS:', stats);
-}
-
-
-const observerVenom = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-            const infoSection = document.getElementById('infoSection');
-            if (infoSection && infoSection.style.display === 'block') {
-                mostrarEstadisticasVeneno();
-            }
-        }
-    });
+if (navInicio) navInicio.addEventListener('click', function (e) {
+    e.preventDefault();
+    mostrarInicio();
 });
 
-const infoSectionVenom = document.getElementById('infoSection');
-if (infoSectionVenom) {
-    observerVenom.observe(infoSectionVenom, { attributes: true });
-}
+if (navInfo) navInfo.addEventListener('click', function (e) {
+    e.preventDefault();
+    mostrarInformacion();
+});
 
 const carouselTrack = document.getElementById('carouselTrack');
 const carouselPrevBtn = document.getElementById('carouselPrevBtn');
@@ -274,41 +168,34 @@ const carouselNextBtn = document.getElementById('carouselNextBtn');
 const carouselDotsContainer = document.getElementById('carouselDots');
 
 let carouselIndex = 0;
-let carouselCards = [];
-let carouselCardsPerView = 1;
 
 function getCarouselCardsPerView() {
-    if (window.innerWidth >= 768) {
-        return 3;
-    } else {
-        return 1;
-    }
+    return window.innerWidth >= 768 ? 3 : 1;
 }
 
 function updateCarousel() {
     if (!carouselTrack) return;
-    
-    carouselCards = document.querySelectorAll('.carousel-card');
-    carouselCardsPerView = getCarouselCardsPerView();
+
+    const carouselCards = document.querySelectorAll('.carousel-card');
+    const carouselCardsPerView = getCarouselCardsPerView();
     const totalCards = carouselCards.length;
     const totalPages = Math.ceil(totalCards / carouselCardsPerView);
     const maxIndex = totalPages - 1;
-    
+
     if (carouselIndex > maxIndex) carouselIndex = maxIndex;
     if (carouselIndex < 0) carouselIndex = 0;
-    
+
     const cardWidth = carouselCards[0]?.offsetWidth || 0;
     const gap = 20;
     const translateX = -carouselIndex * (cardWidth + gap) * carouselCardsPerView;
-    
+
     carouselTrack.style.transform = `translateX(${translateX}px)`;
-    
     updateCarouselDots(totalPages);
 }
 
 function updateCarouselDots(totalPages) {
     if (!carouselDotsContainer) return;
-    
+
     carouselDotsContainer.innerHTML = '';
     for (let i = 0; i < totalPages; i++) {
         const dot = document.createElement('div');
@@ -324,10 +211,8 @@ function updateCarouselDots(totalPages) {
 
 function nextCarousel() {
     const totalCards = document.querySelectorAll('.carousel-card').length;
-    const totalPages = Math.ceil(totalCards / carouselCardsPerView);
-    const maxIndex = totalPages - 1;
-    
-    if (carouselIndex < maxIndex) {
+    const totalPages = Math.ceil(totalCards / getCarouselCardsPerView());
+    if (carouselIndex < totalPages - 1) {
         carouselIndex++;
         updateCarousel();
     }
@@ -345,10 +230,10 @@ if (carouselPrevBtn && carouselNextBtn) {
     carouselNextBtn.addEventListener('click', nextCarousel);
 }
 
-window.addEventListener('resize', () => {
-    updateCarousel();
-});
+window.addEventListener('resize', updateCarousel);
+setTimeout(updateCarousel, 100);
 
+// ============ MODAL ============
 const modal = document.getElementById('insectModal');
 const closeModal = document.querySelector('.close-modal');
 const modalCloseBtn = document.querySelector('.modal-close-btn');
@@ -358,9 +243,7 @@ function abrirModal(insectData) {
     document.getElementById('modalHabitat').textContent = insectData.habitat;
     document.getElementById('modalCientifico').textContent = insectData.cientifico || 'No disponible';
     document.getElementById('modalDato').textContent = insectData.datoCurioso;
-    
-    // Cambiar el ícono según el insecto
-    const iconElement = document.querySelector('.modal-insect-icon');
+
     const iconos = {
         'Mariposa': '🦋',
         'Escarabajo': '🐞',
@@ -368,7 +251,7 @@ function abrirModal(insectData) {
         'Libélula': '🐉',
         'Hormiga': '🐜'
     };
-    
+
     let iconoElegido = '🦋';
     for (const [key, value] of Object.entries(iconos)) {
         if (insectData.nombre.includes(key)) {
@@ -376,8 +259,7 @@ function abrirModal(insectData) {
             break;
         }
     }
-    iconElement.textContent = iconoElegido;
-    
+    document.querySelector('.modal-insect-icon').textContent = iconoElegido;
     modal.style.display = 'flex';
 }
 
@@ -392,15 +274,13 @@ window.addEventListener('click', (e) => {
     if (e.target === modal) cerrarModal();
 });
 
-
 document.addEventListener('click', (e) => {
     const card = e.target.closest('.carousel-card');
     if (card) {
         const insectDataAttr = card.getAttribute('data-insect');
         if (insectDataAttr) {
             try {
-                const insectData = JSON.parse(insectDataAttr);
-                abrirModal(insectData);
+                abrirModal(JSON.parse(insectDataAttr));
             } catch (error) {
                 console.error('Error al parsear datos del insecto:', error);
             }
@@ -408,47 +288,55 @@ document.addEventListener('click', (e) => {
     }
 });
 
-setTimeout(() => {
-    updateCarousel();
-}, 100);
-
 document.querySelectorAll('.insect-item').forEach(item => {
-    item.addEventListener('click', function(e) {
+    item.addEventListener('click', function (e) {
         e.stopPropagation();
-        this.classList.toggle('active');
-        
+        const isActive = this.classList.contains('active');
+
         const column = this.closest('.comparison-column');
-        const otherItems = column.querySelectorAll('.insect-item');
-        
-        otherItems.forEach(otherItem => {
-            if (otherItem !== this && otherItem.classList.contains('active')) {
-                otherItem.classList.remove('active');
-            }
-        });
+        column.querySelectorAll('.insect-item').forEach(other => other.classList.remove('active'));
+
+        if (!isActive) this.classList.add('active');
     });
 });
 
+// Animación de fact-cards al entrar en vista
 const comparisonSection = document.querySelector('.comparison-section');
 if (comparisonSection) {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const cards = document.querySelectorAll('.fact-card');
-                cards.forEach((card, index) => {
+                document.querySelectorAll('.fact-card').forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
                     setTimeout(() => {
-                        card.style.opacity = '0';
-                        card.style.transform = 'translateY(20px)';
-                        setTimeout(() => {
-                            card.style.transition = 'all 0.5s ease';
-                            card.style.opacity = '1';
-                            card.style.transform = 'translateY(0)';
-                        }, 50);
-                    }, index * 100);
+                        card.style.transition = 'all 0.5s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100 + 50);
                 });
                 observer.disconnect();
             }
         });
     }, { threshold: 0.3 });
-    
+
     observer.observe(comparisonSection);
 }
+
+function actualizarFechaHora() {
+    const ahora = new Date();
+    const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const dia = dias[ahora.getDay()];
+    const fecha = ahora.getDate().toString().padStart(2, '0');
+    const mes = (ahora.getMonth() + 1).toString().padStart(2, '0');
+    const anio = ahora.getFullYear();
+    let horas = ahora.getHours();
+    const minutos = ahora.getMinutes().toString().padStart(2, '0');
+    const ampm = horas >= 12 ? 'p.m.' : 'a.m.';
+    horas = horas % 12 || 12;
+    const elemento = document.getElementById('fechaHora');
+    if (elemento) elemento.textContent = `${dia} ${fecha}/${mes}/${anio} ${horas}:${minutos} ${ampm}`;
+}
+
+actualizarFechaHora();
+setInterval(actualizarFechaHora, 60000);
